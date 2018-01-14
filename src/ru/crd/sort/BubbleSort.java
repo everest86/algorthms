@@ -4,7 +4,7 @@ package ru.crd.sort;
  * Created by user on 14.01.2018.
  */
 public class BubbleSort {
-    private static int[] a = {5, 4, 3, 2, 9, 10};
+    private static int[] a = {5, 4, 3, 2, 9, 12};
 
     private static void print() {
         for (int i = 0; i < a.length; i++) {

@@ -1,0 +1,43 @@
+git config --global user.name "Roman Chaptykov"
+
+1. инициализация проекта
+git init
+
+git status
+
+git add .
+
+git add src
+
+git branch -v
+
+git branch new_branch или git checkout -b new_branch
+
+git checkout new_branch
+
+git push -u origin new_branch
+
+git log --graph --all --decorate --oneline
+
+2. merge in master
+
+git merge new_branch
+
+устранить проблемы
+
+git add src/ru/crd/sort/BubbleSort.java
+
+git commit убираем конфликты
+
+git push -u origin master
+
+---
+git config --global mergetool.kdiff3.cmd '""'
+
+git merge master
+
+git mergetool
+
+3. notepad++
+git config --global core.editor "np++.exe -multiInst -notabbar -nosession -noPlugin"
+

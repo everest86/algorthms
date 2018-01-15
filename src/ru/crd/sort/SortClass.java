@@ -1,5 +1,7 @@
 package ru.crd.sort;
 
+import java.util.Arrays;
+
 /**
  * Created by user on 14.01.2018.
  */
@@ -7,7 +9,7 @@ public class SortClass {
     private static int[] a = {5, 4, 8, 2, 6, 3};
 
     public static void main(String[] args) {
-        Sort s = new BubbleSortClass(a);
+        Sort s = new HeapSort(a);
         s.sort();
         s.print();
     }
@@ -138,13 +140,50 @@ class QuickSortClass extends AbstractSort {
     }
 }
 
+class MergeSort extends AbstractSort{
+    public MergeSort(int[] a) {
+        super.a = a;
+    }
+
+    @Override
+    public void sort() {
+        innerSort(a,0,a.length-1);
+    }
+
+    private void innerSort(int[]a, int lo, int hi){
+        if(lo>=hi)return;
+        int mid=lo+(hi-lo)/2;
+
+        innerSort(a,lo,mid);
+        innerSort(a,mid+1,hi);
+
+        int[]buf= Arrays.copyOf(a,a.length);
+
+        int i=lo, j=mid+1;
+        for (int k = lo; k <= hi ; k++) {
+            if(i>mid)a[k]=buf[j++];
+            else if(j>hi)a[k]=buf[i++];
+            else if(a[j]>a[i])a[k]=buf[i++];
+            else a[k]=buf[j++];
+        }
+    }
+}
+
 class HeapSort extends AbstractSort {
 
+    private int heapSize;
+
     private int left(int index) {
-        return a[index];
+        return 2*index+2;
     }
     private int right(int index) {
-        return a[index+1];
+        return 2*index+1;
+    }
+
+    private void swap(int[]a,int i,int j){
+        int t=a[i];
+        a[i]=a[j];
+        a[j]=t;
     }
 
     public HeapSort(int[] a) {
@@ -153,10 +192,34 @@ class HeapSort extends AbstractSort {
 
     @Override
     public void sort() {
-
+        buildHeap(a);
+        while (heapSize>1){
+            swap(a,0,heapSize-1);
+            --heapSize;
+            heapify(a,0);
+        }
     }
 
-    private void heapify(int[]a,int l,int r){
+    private void heapify(int[]a,int i){
+        int l=left(i);
+        int r=right(i);
+        int greater=i;
+        if(l<heapSize && a[l]>a[i]){
+            greater=l;
+        }
+        if(r<heapSize && a[r]>a[greater]){
+            greater=r;
+        }
+        if(i!=greater){
+            swap(a,i,greater);
+            heapify(a,greater);
+        }
+    }
 
+    private void buildHeap(int[]a){
+        heapSize=a.length;
+        for (int i = 0; i < heapSize/2; i++) {
+            heapify(a,i);
+        }
     }
 }

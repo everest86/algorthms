@@ -7,18 +7,27 @@ public class SortClass {
     private static int[] a = {5, 4, 8, 2, 6, 3};
 
     public static void main(String[] args) {
-        Sort s = new QuickSortClass(a);
+        Sort s = new BubbleSortClass(a);
         s.sort();
         s.print();
     }
 }
 
-class BubbleSortClass implements Sort {
+abstract class AbstractSort implements Sort{
+    protected int[] a;
 
-    private int[] a;
+    @Override
+    public void print() {
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
+        }
+    }
+}
+
+class BubbleSortClass extends AbstractSort {
 
     public BubbleSortClass(int[] a) {
-        this.a = a;
+        super.a = a;
     }
 
     @Override
@@ -33,20 +42,11 @@ class BubbleSortClass implements Sort {
             }
         }
     }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
-    }
 }
 
-class SelectSortClass implements Sort {
-    private int[] a;
-
+class SelectSortClass extends AbstractSort {
     public SelectSortClass(int[] a) {
-        this.a = a;
+        super.a = a;
     }
 
     @Override
@@ -65,20 +65,11 @@ class SelectSortClass implements Sort {
             }
         }
     }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
-    }
 }
 
-class InsertSortClass implements Sort {
-    private int[] a;
-
+class InsertSortClass extends AbstractSort {
     public InsertSortClass(int[] a) {
-        this.a = a;
+        super.a = a;
     }
 
     @Override
@@ -91,51 +82,36 @@ class InsertSortClass implements Sort {
             }
         }
     }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
-    }
 }
 
-class ShellSortClass implements Sort {
-    private int[] a;
+class ShellSortClass extends AbstractSort {
 
     public ShellSortClass(int[] a) {
-        this.a = a;
+        super.a = a;
     }
 
     @Override
     public void sort() {
-        int h = 1;
-        while (h <= a.length / 3) h = h * 3 + 1;
-        while (h > 0) {
-            for (int i = h; i < a.length; i++) {
-                for (int j = i; j >= h && a[j - h] > a[j]; j -= h) {
-                    int t = a[j - h];
-                    a[j - h] = a[j];
-                    a[j] = t;
+        int N=a.length;
+        int k=3;
+        int h=1;
+        while (h<=N/k)h=h*k+1;
+        while (h>0){
+            for (int i = h; i < N; i++) {
+                for (int j = i; j >=h && a[j-h]>a[j] ; j-=h) {
+                    int t=a[j-h];
+                    a[j-h]=a[j];
+                    a[j]=t;
                 }
-                h /= 3;
             }
-        }
-    }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
+            h/=k;
         }
     }
 }
 
-class QuickSortClass implements Sort {
-    private int[] a;
-
+class QuickSortClass extends AbstractSort {
     public QuickSortClass(int[] a) {
-        this.a = a;
+        super.a = a;
     }
 
     @Override
@@ -159,12 +135,5 @@ class QuickSortClass implements Sort {
         }
         if(j>l)innerSort(a,l,j);
         if(i<r)innerSort(a,i,r);
-    }
-
-    @Override
-    public void print() {
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
     }
 }

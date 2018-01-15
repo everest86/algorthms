@@ -13,7 +13,7 @@ public class SortClass {
     }
 }
 
-abstract class AbstractSort implements Sort{
+abstract class AbstractSort implements Sort {
     protected int[] a;
 
     @Override
@@ -92,19 +92,19 @@ class ShellSortClass extends AbstractSort {
 
     @Override
     public void sort() {
-        int N=a.length;
-        int k=3;
-        int h=1;
-        while (h<=N/k)h=h*k+1;
-        while (h>0){
+        int N = a.length;
+        int k = 3;
+        int h = 1;
+        while (h <= N / k) h = h * k + 1;
+        while (h > 0) {
             for (int i = h; i < N; i++) {
-                for (int j = i; j >=h && a[j-h]>a[j] ; j-=h) {
-                    int t=a[j-h];
-                    a[j-h]=a[j];
-                    a[j]=t;
+                for (int j = i; j >= h && a[j - h] > a[j]; j -= h) {
+                    int t = a[j - h];
+                    a[j - h] = a[j];
+                    a[j] = t;
                 }
             }
-            h/=k;
+            h /= k;
         }
     }
 }
@@ -116,24 +116,47 @@ class QuickSortClass extends AbstractSort {
 
     @Override
     public void sort() {
-        innerSort(a,0,a.length-1);
+        innerSort(a, 0, a.length - 1);
     }
 
-    private void innerSort(int[]a,int l, int r){
-        int m = a[l+(r-l)/2];
-        int i=l,j=r;
-        while(i<=j){
-            while(a[j]>m)j--;
-            while (a[i]<m)i++;
-            if(i<=j){
-                int t=a[i];
-                a[i]=a[j];
-                a[j]=t;
+    private void innerSort(int[] a, int l, int r) {
+        int m = a[l + (r - l) / 2];
+        int i = l, j = r;
+        while (i <= j) {
+            while (a[j] > m) j--;
+            while (a[i] < m) i++;
+            if (i <= j) {
+                int t = a[i];
+                a[i] = a[j];
+                a[j] = t;
                 i++;
                 j--;
             }
         }
-        if(j>l)innerSort(a,l,j);
-        if(i<r)innerSort(a,i,r);
+        if (j > l) innerSort(a, l, j);
+        if (i < r) innerSort(a, i, r);
+    }
+}
+
+class HeapSort extends AbstractSort {
+
+    private int left(int index) {
+        return a[index];
+    }
+    private int right(int index) {
+        return a[index+1];
+    }
+
+    public HeapSort(int[] a) {
+        super.a = a;
+    }
+
+    @Override
+    public void sort() {
+
+    }
+
+    private void heapify(int[]a,int l,int r){
+
     }
 }
